@@ -12,13 +12,25 @@ public class UD5_ej18 {
     static Scanner in;
 
     public static int getDni() {
-        System.out.print("Introduce tu DNI: ");
+        System.out.print("Introduce tu número del DNI: ");
         int dni = in.nextInt();
         return dni;
     }
 
-    public static 
+    public static char assignLetter(int dni) {
+        int res = dni % 23;
+        char[] dniLetters = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B','N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
+        return dniLetters[res];
+    }
+
+    public static void dniGenerator() {
+        int dni = getDni();
+        char letter = assignLetter(dni);
+        System.out.println("Tu DNI es: " + Integer.toString(dni) + letter);
+    }
+
     public static void main(String[] args) {
         in = new Scanner(System.in);
+        dniGenerator();
     }
 }

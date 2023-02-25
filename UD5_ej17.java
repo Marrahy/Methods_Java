@@ -14,23 +14,33 @@ public class UD5_ej17 {
         return value;
     }
 
-    public static int getPrime(int value) {
-        if (value % 2 != 0 && value % 3 != 0) {
-            System.out.println("Este número es primo");
-        }
-        else {
-            System.out.println("Este número no es primo");
-        }
-        return value;
+    public static boolean isPrime(int value) {
+        if (value == 1)
+            return false;
+        return value % 2 != 0 && value % 3 != 0;
     }
 
-    public static void getValueTillZero(int value) {
+    public static void getPrime(int value) {
+        if (isPrime(value))
+            System.out.println("Es primo");
+        else
+            System.out.println("No es primo");
+    }
+
+    public static void getValueTillZero() {
+        int value = getValue();
         while (value != 0) {
-            getPrime(getValue());
+            if (value < 0){
+                System.out.println("Introduce un valor mayor que 0");
+            }
+            else {
+                getPrime(value);
+            }
+            value = getValue();    
         }
     }
     public static void main(String[] args) {
         in = new Scanner(System.in);
-        getValueTillZero(getValue());
+        getValueTillZero();
     }
 }
