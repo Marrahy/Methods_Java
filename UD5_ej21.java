@@ -23,6 +23,7 @@ public class UD5_ej21 {
     public static int menu() {
         System.out.println("1.Circunferencia");
         System.out.println("2.Área");
+        System.out.println("3.Volumen");
         System.out.print("Elige una opción: ");
         return in.nextInt();
     }
@@ -43,22 +44,33 @@ public class UD5_ej21 {
         area = Math.PI * Math.pow(r, 2);
         return area;
     }
+
+    public static double volumen(double r) {
+        double volumen = 0.0;
+        volumen = (4 / 3) * Math.PI * Math.pow(r, 3);
+        return volumen;
+    }
+
     public static void main(String[] args) {
         in = new Scanner(System.in);
         int opcion = menu();
         switch (opcion) {
-            case 1:
-            {
+            case 1: {
                 double radio = pideRadio();
                 double circunferencia = circunferencia(radio);
                 System.out.println("La circunferencia: " + circunferencia);
             }
             break;
-            case 2:
-            {
+            case 2: {
                 double radio = pideRadio();
                 double area = area(radio);
                 System.out.println("El área es: " + area);
+            }
+            break;
+            case 3: {
+                double radio = pideRadio();
+                double volumen = volumen(radio);
+                System.out.println("El volumen de la esfera es: " + volumen);
             }
             break;
         }
