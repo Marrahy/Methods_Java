@@ -9,15 +9,13 @@ public class UD5_ej5 {
 
         Scanner in = new Scanner(System.in);
         System.out.print("Introduce un valor entero en millas: ");
-        int millas = in.nextInt();
-        return millas;
+        return in.nextInt();
     }
 
     public static double convertToKm() {
 
         int millas = inputUser();
-        double mToKm = millas * 1.60934;
-        return mToKm;
+        return millas * 1.60934;
     }
     public static void main(String[] args) {
         

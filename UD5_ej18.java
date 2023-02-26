@@ -13,8 +13,7 @@ public class UD5_ej18 {
 
     public static int getDni() {
         System.out.print("Introduce tu número del DNI: ");
-        int dni = in.nextInt();
-        return dni;
+        return in.nextInt();
     }
 
     public static char assignLetter(int dni) {
@@ -26,7 +25,7 @@ public class UD5_ej18 {
     public static void dniGenerator() {
         int dni = getDni();
         char letter = assignLetter(dni);
-        System.out.println("Tu DNI es: " + Integer.toString(dni) + letter);
+        System.out.println("Tu DNI es: " + dni + letter);
     }
 
     public static void main(String[] args) {
