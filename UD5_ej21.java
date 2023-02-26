@@ -27,33 +27,40 @@ public class UD5_ej21 {
         return in.nextInt();
     }
 
-    public static double getRadio() {
+    public static double pideRadio() {
         System.out.print("Introduce el radio: ");
         return in.nextDouble();
     }
 
-    public static void option() {
-        if (menu() == 1)
-            getCircunference();
-        else
-            getArea();
+    public static double circunferencia(double r) {
+        double circunferencia = 0.0;
+        circunferencia = 2 * Math.PI * r;
+        return circunferencia;
     }
 
-    public static void getCircunference() {
-        double circunference = 0.0;
-        double radio = getRadio();
-        circunference = 2 * Math.PI * radio;
-        System.out.println("La circunferencia del cícrulo es: " + circunference);
-    }
-
-    public static void getArea() {
+    public static double area(double r) {
         double area = 0.0;
-        double radio = getRadio();
-        area = Math.PI * Math.pow(radio, 2);
-        System.out.println("El área del cícrulo es: " + area);
+        area = Math.PI * Math.pow(r, 2);
+        return area;
     }
     public static void main(String[] args) {
         in = new Scanner(System.in);
-        option();
+        int opcion = menu();
+        switch (opcion) {
+            case 1:
+            {
+                double radio = pideRadio();
+                double circunferencia = circunferencia(radio);
+                System.out.println("La circunferencia: " + circunferencia);
+            }
+            break;
+            case 2:
+            {
+                double radio = pideRadio();
+                double area = area(radio);
+                System.out.println("El área es: " + area);
+            }
+            break;
+        }
     }
 }
