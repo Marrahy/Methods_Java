@@ -8,8 +8,7 @@ public class UD5_ej11 {
     static Scanner in;
 
     public static int getValue() {
-        int value = in.nextInt();
-        return value;
+        return in.nextInt();
     }
 
     public static int getMultTable() {

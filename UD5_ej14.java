@@ -9,15 +9,13 @@ public class UD5_ej14 {
 
     public static int getValue() {
         System.out.print("Introduce el número de líneas de la piramide: ");
-        int numLinea = in.nextInt();
-        return numLinea;
+        return in.nextInt();
     }
 
     public static Character getChar() {
         System.out.print("Introduce el tipo de carácter con el que quieras hacer la piramide: ");
         String input = in.next();
-        char character = input.charAt(0);
-        return character;
+        return input.charAt(0);
     }
 
     public static void printPyramid() {

@@ -10,8 +10,7 @@ public class UD5_ej13 {
 
     public static double getValue() {
         System.out.print("Introduce el precio sin descuento: ");
-        double price = in.nextDouble();
-        return price;
+        return in.nextDouble();
     }
 
     public static double calcDiscount() {

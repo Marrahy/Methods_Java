@@ -10,8 +10,7 @@ public class UD5_ej17 {
     
     public static int getValue() {
         System.out.print("Introduce un número: ");
-        int value = in.nextInt();
-        return value;
+        return in.nextInt();
     }
 
     public static boolean isPrime(int value) {
