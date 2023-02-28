@@ -1,102 +1,99 @@
-import java.util.Arrays;
 import java.util.Scanner;
 import java.lang.Math;
+import java.util.Arrays;
 public class Ahorcado {
+
     static Scanner in = new Scanner(System.in);
-    static Character[] hyphen = hideWord();
-    static Character[] useLetters = new Character[25];
+    static String word = getRandWords().toLowerCase();
+    static String hyphenWordLength = getHyphenWordLength();
+    static char[] usedLetters = new char[25];
+    static boolean win = false;
+    static boolean gameOver = false;
+    static boolean checkPassed = false;
     static int lifePoints = 5;
-    static int lettersCount = 0;
+    static int hyphenCount = word.length();
 
-    public static String randWords() {      //Elige la palabra random\\
-        String[] ahorcadoWords = {"Agrio", "Perro", "Payaso", "Calvo", "Lampara"};
-        String word = ahorcadoWords[(int) (Math.random() * (5 - 1)) + 1];
-        return word;        //Devuelve una palabra\\
+
+    public static String getRandWords() {                                           //Elige la palabra random\\
+        String[] ahorcadoWords = {"Agrio", "Perro", "Tecla", "Calvo", "Cajas"};
+        return ahorcadoWords[(int) (Math.random() * (5 - 1)) + 1];                  //Devuelve una palabra\\
     }
-
-    public static Character[] hideWord() {      //Crea una array de caracteres y los rellena con guiones en base a la longitud de la palabra seleccionada en randWords\\
-        String word = randWords();
-        Character[] hidedWord = new Character[word.length()];
+    public static String getHyphenWordLength() {                                    //Crea una string de guiones con el numero de letras que tenga la variable "word"\\
+        String hyphenWordLength = "";
+        char hyphen = '-';
         for (int i = 0; i < word.length(); i++) {
-            hidedWord[i] = '-';
+            hyphenWordLength += hyphen;                                              //Añade un guion por loop en la string "hyphenWordLength"\\
         }
-        return hidedWord;       //Devuelve una array con guiones\\
+        System.out.printf(hyphenWordLength);
+        return hyphenWordLength;                                                      //Devuelve una string con guiones\\
     }
-
-    public static char usrChar() {      //El usuario escoge una letra\\
+    public static char getUsrChar() {
         System.out.print("Introduce una letra: ");
-        useLetters[lettersCount] = in.next().charAt(0);
-        lettersCount++;
-        return in.next().charAt(0);
+        char usrLetter = in.next().charAt(0);
+        return usrLetter;
+    }
+    public static void checkLetter(char usrLetter) {                                    //Checkea si la letra ya se ha utilizado\\
+        for (int i = 0; i < usedLetters.length; i++) {
+            if (usedLetters[i] == usrLetter) {                                          //Si la letra esta en la array de "usedLetters" imprime un aviso\\
+                System.out.println("Esta letra ya ha sido utilizada, prueba con otra.");
+                break;
+            }
+            else {
+                if (usedLetters[i] == '\u0000') {                                            //Si la letra no esta en la array añade la letra propuesta a "usedLetters"\\
+                    usedLetters[i] = usrLetter;
+                    checkPassed = true;
+                    break;
+                }
+            }
+        }
     }
 
-    public static void wordIteration(String word) {     //Itera sobre las posiciones de la palabra seleccionada para compararla con la letra introducida por el usuario\\
-        char letter = usrChar();
-        boolean notFound = false;
+    public static void checkLetterInWord(char usrLetter) {                              //Añade las letras propuestas por el usuario a la array de guiones si esta en la palabra\\
+        char[] updatedHyphenString = hyphenWordLength.toCharArray();                    //Convierto la String de hyphenWordLength a una array de caracteres para poder sustituir el guion por el caracter propuesto por el usuario\\
         for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == letter) {             //Si la letra coincide, la letra sobreescribe el guíon por el que la iteracion ha encontrado la letra de la palabra
-                hyphen[i] = letter;
-                System.out.println("La letra está dentro de la palabra! :D");
-                notFound = true;
+            if (usrLetter == word.charAt(i)) {
+                System.out.println("Has acertado! :D");                              //Si el caracter propuesto es igual al caracter de la palabra de la posicion i, sustituye en la array de guiones el guion de updatedHyphenString de i por la letra propuesta\\
+                updatedHyphenString[i] = usrLetter;
+                hyphenCount--;
+                if (hyphenCount == 0) {                                                 //Si el contador de guiones llega a 0, quiere decir que todas las letras han sido descubiertas, el jugador gana la partida\\
+                    System.out.println("Has ganado :D");
+                    System.out.println("La palabra es: " + word);
+                    System.exit(0);
+                }
+                if (i == word.length() - 1)
+                    break;
+            }
+            if (i == word.length() - 1) {                                               //Si el jugador falla al proponer una letra, pierde una vida\\
+                System.out.println("Esa letra no está en la palabra!, has perdido una vida D:");
+                lifePoints--;                                                           //A lifePoints se le resta 1 vida\\
+                System.out.println("Te quedan: " + lifePoints + " vidas.");
+                if (lifePoints == 0) {                                                  //Si lifePoints llega a 0, el juego termina\\
+                    gameOver = true;
+                    System.out.println("Has perdido todas las vidas D:");
+                    System.out.println("GAME OVER");
+                    System.exit(0);
+                }
+                break;
             }
         }
-        if (!notFound) {
-            System.out.println("La letra no está en la palabra!, pierdes una vida D:");
-            lifePoints--;
-        }
-    }
-
-    public static boolean hyphenIteration() {      //Itera sobre la array de guiones para ver si quedan o no guiones, si quedan, devuelve false, quiere decir que el programa seguira pidiendo caracteres al usuario, en cambio si no quedan guiones, devuelve true, que quiere decir que el usuario ha ganado
-        for (int i = 0; i < hyphen.length; i++) {
-            if (hyphen[i] != '-') {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void checkStatusGame(int lifePoints) {
-        boolean check = hyphenIteration();
-        if (check) {
-            System.out.println("Has ganado! :D");
-            System.exit(0);
-        }
-        else if (lifePoints == 0) {
-            System.out.println("Has perdido! D:");
-            System.exit(0);
-        }
-    }
-
-    public static void printHyphen() {
-        for (int i = 0; i < hyphen.length; i++) {
-            System.out.print(hyphen[i] + " ");
-        }
-    }
-
-    public static void printUsedLetters() {
-        for (int i = 0; i < lettersCount; i++) {
-            System.out.print(useLetters[i] + " ");
-        }
+        System.out.println(hyphenWordLength = String.valueOf(updatedHyphenString));
+        checkPassed = false;     //Revierto la array a String y la imprimo\\
     }
 
     public static void ahorcado() {
-        System.out.println("El ahorcado");
-        System.out.print("Palabra: ");
-        printHyphen();
-        System.out.println("");
-        System.out.println("Vidas: " + lifePoints);
-        System.out.print("Letras usadas: ");
-        System.out.println("");
-        printUsedLetters();
-        String randWord = randWords();
-        wordIteration(randWord);
+        System.out.println();
+        char usrchar = getUsrChar();
+        checkLetter(usrchar);
+        while (checkPassed) {
+            checkLetterInWord(usrchar);
+        }
+        System.out.print(Arrays.toString(usedLetters));
 
     }
 
     public static void main(String[] args) {
-        while(true) {
+        while (!win || !gameOver) {
             ahorcado();
-            checkStatusGame(lifePoints);
         }
     }
 }
